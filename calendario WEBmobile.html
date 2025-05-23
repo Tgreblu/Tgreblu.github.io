@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <!-- 1. Meta viewport per rendere il layout davvero responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+  <title>Calendario Fluid con Eventi Persistenti</title>
+  <style>
+    :root {
+      --quarter-label-w: 30px;
+      --week-num-w: 28px;
+      --gap: 2px;
+      --hdr-bg: #f0f0f0;
+      --wd-bg: #e0e0e0;
+      --font-sm: 10px;      /* dimensione base per desktop */
+      --border: #aaa;
+      --today-bg: yellow;
+      --holiday-bg: lightgreen;
+      --header-h: 24px;
+      --weekday-h: 20px;
+    }
+
+    /* ... il resto delle tue regole CSS ... */
+
+    /* 2. Media query per schermi piccoli (es. smartphone) */
+    @media screen and (max-width: 600px) {
+      :root {
+        --font-sm: 14px;
+        --header-h: 28px;
+        --weekday-h: 24px;
+      }
+    }
+  </style>
+  <!-- ... gli script ... -->
+</head>
+<body>
+  <!-- il tuo #header, #calendar, #events, ecc. -->
+</body>
+</html>

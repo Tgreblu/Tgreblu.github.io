@@ -12,26 +12,20 @@
     #form-container {
       display: grid;
       grid-template-columns: 3fr 1fr 1.2fr;
-      gap: 20px;
+      gap: 40px;
       background: #fff;
-      width: 100%;
-      max-width: 1000px;
+      width: auto;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       margin: auto;
       padding: 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     /* Etichette dimensioni */
-    .label {
-      font-weight: bold;
-      text-align: left;
-      margin-bottom: 4px;
-      font-size: 14px;
-    }
+    .label { font-weight: bold; text-align: left; margin-bottom: 4px; font-size: 14px; }
     .label small { font-weight: normal; font-size: 12px; }
     /* Wrapper colonna GR_A */
-    .placeholder-A-wrapper { display: flex; flex-direction: column; }
-    /* Wrapper colonna GR_B */
-    .placeholder-B-wrapper { display: flex; flex-direction: column; }
+    .placeholder-A-wrapper, .placeholder-B-wrapper { display: flex; flex-direction: column; }
     /* Form e Titolo */
     .form-area { display: flex; flex-direction: column; align-items: center; text-align: center; }
     h1 { font-size: 20px; margin-bottom: 10px; }
@@ -40,11 +34,18 @@
     .field input[type="text"], .field input[type="date"] { width: 100%; padding: 6px; box-sizing: border-box; font-size: 14px; }
     .dates { display: flex; gap: 10px; width: 100%; }
     .dates > div { flex: 1; }
-    .image-placeholder { border: 2px dashed #bbb; border-radius: 4px; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .image-placeholder img { max-width: 100%; max-height: 100%; display: block; }
+    .image-placeholder {
+      border: 2px dashed #bbb; border-radius: 4px; position: relative;
+      cursor: pointer; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden; padding: 10px;
+    }
+    .image-placeholder div { text-align: center; }
+    .image-placeholder .title { font-size: 16px; font-weight: bold; }
+    .image-placeholder .subtitle { font-size: 12px; margin-top: 4px; }
     /* Dimensioni specifiche */
-    .placeholder-A { width: 100%; height: 580px; }
-    .placeholder-B { width: 100%; height: 580px; }
+    .placeholder-A { width: 666px; height: 662px; }
+    .placeholder-B { width: 222px; height: 662px; }
     .placeholder-Desk { width: 220px; height: 220px; margin-top: 20px; }
     input[type="file"] { display: none; }
     #download-pdf { margin-top: 20px; padding: 8px 16px; font-size: 14px; cursor: pointer; }
@@ -55,12 +56,18 @@
     <!-- GR_A -->
     <div class="placeholder-A-wrapper">
       <div class="label">GR_A <small>294 x h292cm</small></div>
-      <div class="image-placeholder placeholder-A" data-index="A">GRAFICA BRAND<br><small>può contenere loghi commerciali</small></div>
+      <div class="image-placeholder placeholder-A" data-index="A">
+        <div class="title">GRAFICA BRAND</div>
+        <div class="subtitle">può contenere loghi commerciali</div>
+      </div>
     </div>
     <!-- GR_B -->
     <div class="placeholder-B-wrapper">
       <div class="label">GR_B <small>98 x h292cm</small></div>
-      <div class="image-placeholder placeholder-B" data-index="B">GRAFICA BRAND<br><small>può contenere loghi commerciali</small></div>
+      <div class="image-placeholder placeholder-B" data-index="B">
+        <div class="title">GRAFICA BRAND</div>
+        <div class="subtitle">può contenere loghi commerciali</div>
+      </div>
     </div>
     <!-- Form e Titolo -->
     <div class="form-area">
@@ -81,12 +88,14 @@
         <div><label for="date-from">DAL</label><input type="date" id="date-from"></div>
         <div><label for="date-to">AL</label><input type="date" id="date-to"></div>
       </div>
-      <button id="download-pdf">Scarica PDF</button>
-      <!-- GR_DESK spostato sotto il bottone -->
-      <div>
-        <div class="label">GR_DESK <small>97 x h97cm</small></div>
-        <div class="image-placeholder placeholder-Desk" data-index="Desk">GRAFICA BRAND<br><small>può contenere loghi commerciali</small></div>
+      <!-- GR_DESK spostato subito sotto al form -->
+      <div class="label" style="align-self: flex-start; margin-top: 20px;">GR_DESK <small>97 x h97cm</small></div>
+      <div class="image-placeholder placeholder-Desk" data-index="Desk">
+        <div class="title">GRAFICA BRAND</div>
+        <div class="subtitle">può contenere loghi commerciali</div>
       </div>
+      <!-- Pulsante posizionato sotto GR_DESK -->
+      <button id="download-pdf">Scarica PDF</button>
     </div>
   </div>
 
@@ -113,11 +122,9 @@
       html2canvas(document.getElementById('form-container'), { scale: 2 }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
         const { jsPDF } = window.jspdf;
-        // PDF A4 Landscape in mm
         const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
-        // calcola scala per adattare
         const imgProps = pdf.getImageProperties(imgData);
         const imgWidth = pageWidth;
         const imgHeight = (imgProps.height * pageWidth) / imgProps.width;
@@ -128,4 +135,3 @@
   </script>
 </body>
 </html>
-
